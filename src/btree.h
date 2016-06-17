@@ -1,20 +1,14 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef BTREEH
+#define BTREEH
 
-#ifndef BTREE_H
-#define BTREE_H
+typedef struct btree BTree;
 
-typedef struct _btree BTree;
-BTree* btree_create(int order);
-void   btree_destroy(BTree* bt, void(*cb_destroy)(void*));
-void   btree_insert(BTree* bt, int key, void* info);
-void   btree_remove(BTree* bt, int key);
-void   btree_print_indent(BTree* bt, void (*cb_print)(const void*));
-void*  btree_find(BTree* bt, int key);
+BTree∗ bt create (void);
+void bt destroy (BTree∗ a);
+BTree∗ bt search (BTree∗ a, int x, int∗ pos);
+int bt key (BTree∗ a, int pos);
+BTree∗ bt insert (BTree∗ a, int x);
+BTree∗ bt remove (BTree∗ a, int x);
+void bt print (BTree∗ a, int indent);
 
-#endif
-
-#ifdef __cplusplus
-}
 #endif
