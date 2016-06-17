@@ -1,4 +1,4 @@
-static BTPage* btree_page_create_empty(BTree* bt, BTPage* pgParent)
+static BTPage* btree_page_create_empty(BTree* bt, BTPage* pgParent)//versao01
 {
   int i;
   /* allocate memory for page structure */
