@@ -98,7 +98,7 @@ static void insert (BTree* a, int x) {
     addright(a,pos,x,NULL);
   }
   else {
-    insert( a->p [pos], x );
+    insert( a->p[pos], x );
     if (overflow(a->p[pos])) {
       int m;
       BTree* b = split(a->p[pos],&m);
@@ -135,14 +135,14 @@ void bt_print (BTree* a, int indent)
   if (isleaf(a)) {
     for (i = a->n - 1; i >= 0; --i) {
       INDENT(indent);
-      printf( "%d \n " , a->k[i]);
+      printf( "%d \n" , a->k[i]);
     }
   }
   else {
     bt_print(a->p[a->n],indent+2);
     for (i = a->n - 1; i>=0; --i) {
       INDENT(indent);
-      printf("%d \n " , a->k[i] ) ;
+      printf("%d \n" , a->k[i] ) ;
       bt_print(a->p[i],indent+2);
     }
   }
