@@ -3,12 +3,12 @@
 
 typedef struct btree BTree;
 
-BTree∗ bt create (void);
-void bt destroy (BTree∗ a);
-BTree∗ bt search (BTree∗ a, int x, int∗ pos);
-int bt key (BTree∗ a, int pos);
-BTree∗ bt insert (BTree∗ a, int x);
-BTree∗ bt remove (BTree∗ a, int x);
-void bt print (BTree∗ a, int indent);
+BTree* bt_create (void);
+void bt_destroy (BTree* a);
+BTree* bt_search (BTree* a, int x, int* pos);
+int bt_key (BTree* a, int pos);
+BTree* bt_insert (BTree* a, int x);
+BTree* bt_remove (BTree* a, int x);
+void bt_print (BTree* a, int indent);
 
 #endif
