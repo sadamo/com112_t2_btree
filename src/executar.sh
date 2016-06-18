@@ -1,2 +1,2 @@
 gcc btree.c main.c -W -o programa
-./programa
+./programa entrada_big.txt
