@@ -2,7 +2,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#define N 10
+#define N 4
 
 int main (void) {
   int i;
@@ -11,7 +11,7 @@ int main (void) {
 
   BTree* a = bt_create();
   for (i = 0; i<N; ++i) {
-    v[i] = i; //rand()%500;
+    v[i] = i;
     a = bt_insert(a,v[i]);
   }
   bt_print(a,0);

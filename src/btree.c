@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define N 3 /* Ordem (precisa ser impar) */
+#define N 4 /* Ordem (precisa ser impar) */
 struct btree {
   int n; /* Numero de chaves */
   int k[N];
@@ -64,7 +64,13 @@ static BTree* split (BTree* a, int* m) {
   int i;
   BTree* b = bt_create();
 
-  int q = a->n/2;
+  int q;
+
+  if(q%2 == 0)
+    q = (a->n/2)-1;
+  else
+    q = a->n/2;
+
   b->n = a->n - q - 1;
   a->n = q;
   *m = a->k[q];
@@ -92,8 +98,7 @@ static void addright (BTree* a , int pos, int k, BTree* p) {
 
 static void insert (BTree* a, int x) {
   int pos;
-  findpos(a,x,&pos);
-  /* insert even if already exists */
+  findpos(a,x,&pos); /* insere mesmo se ja existir */
   if (isleaf(a)) {
     addright(a,pos,x,NULL);
   }
