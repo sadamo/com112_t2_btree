@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define N 4 /* Ordem (precisa ser impar) */
 struct btree {
+  int ordem;
   int n; /* Numero de chaves */
-  int k[N];
-  BTree *p[N+1];
+  int *k; /* k[ordem] */
+  BTree **p; /* *p[N+1] */
 };
 
 
@@ -38,8 +38,12 @@ int bt_key (BTree* a, int pos) {
   return a->k[pos];
 }
 
-BTree* bt_create (void) {
+BTree* bt_create (int ordem) {
   BTree* a = (BTree*) malloc(sizeof(BTree));
+
+  a->ordem = ordem;
+  a->k = (int*) malloc(sizeof(int)*ordem);
+  a->p = (BTree**) malloc(sizeof(BTree*)*(ordem+1));
   a->n = 0;
   a->p[0] = NULL;
   return a;
@@ -57,16 +61,16 @@ void bt_destroy (BTree* a) {
 
 
 static int overflow (BTree* a) {
-  return (a->n == N);
+  return (a->n == a->ordem);
 }
 
 static BTree* split (BTree* a, int* m) {
   int i;
-  BTree* b = bt_create();
+  BTree* b = bt_create(a->ordem);
 
   int q;
 
-  if(q%2 == 0)
+  if(a->ordem%2 == 0)
     q = (a->n/2)-1;
   else
     q = a->n/2;
@@ -119,7 +123,7 @@ BTree* bt_insert (BTree* a, int x) {
   if(overflow(a)) {
     int m;
     BTree* b = split(a,&m);
-    BTree* r = bt_create(); r->k[0] = m;
+    BTree* r = bt_create(a->ordem); r->k[0] = m;
     r->p[0] = a;
     r->p[1] = b;
     r->n = 1;

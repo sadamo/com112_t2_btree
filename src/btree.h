@@ -3,7 +3,7 @@
 
 typedef struct btree BTree;
 
-BTree* bt_create (void);
+BTree* bt_create (int ordem);
 void bt_destroy (BTree* a);
 BTree* bt_search (BTree* a, int x, int* pos);
 int bt_key (BTree* a, int pos);

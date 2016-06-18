@@ -2,14 +2,15 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#define N 4
+#define N 6
+#define ORDEM 4
 
 int main (void) {
   int i;
   int v[N];
   srand(time(NULL));
 
-  BTree* a = bt_create();
+  BTree* a = bt_create(ORDEM);
   for (i = 0; i<N; ++i) {
     v[i] = i;
     a = bt_insert(a,v[i]);
