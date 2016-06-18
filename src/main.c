@@ -5,11 +5,30 @@
 #define N 6
 #define ORDEM 4
 
+clock_t inicio_cpu;
+time_t inicio_time;
+void iniciar_cronometro(char* msg)
+{
+  printf("Medindo tempo: %s\n", msg);
+  inicio_time = time(NULL);
+  inicio_cpu = clock();
+}
+
+void parar_cronometro(char* msg)
+{
+  clock_t fim_cpu = (clock()-inicio_cpu);
+  time_t fim_time = time(NULL) - inicio_time;
+
+  printf("Tempo da operacao:\nSegundos: %ld\nClock Ticks: %ld\n%s\n\n", fim_time, fim_cpu, msg);
+}
 
 BTree* inicializar_arvore(FILE* pf, int* ordem) {
   BTree* a;
-  int i;
+  int count_elementos = 0;
   int elemento;
+  char saida[100];
+
+  iniciar_cronometro("Iniciando Arvore");
   fscanf(pf, "%d", ordem);
 
   printf("Ordem %d\n", (*ordem));
@@ -17,10 +36,13 @@ BTree* inicializar_arvore(FILE* pf, int* ordem) {
 
   while(fscanf(pf, "%d, ", &elemento) != EOF) {
     a = bt_insert(a, elemento);
+    count_elementos++;
   }
-
+  sprintf(saida, "%d elementos inseridos", count_elementos);
+  parar_cronometro(saida);
   return a;
 }
+
 
 
 void opcao_imprimir(BTree* a) {
