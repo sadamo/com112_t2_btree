@@ -132,6 +132,38 @@ BTree* bt_insert (BTree* a, int x) {
   return a;
 }
 
+static void preemptive_insert (BTree* a, int x) {
+  int pos;
+  findpos(a,x,&pos); /* insere mesmo se ja existir */
+  if (isleaf(a)) {
+    addright(a,pos,x,NULL);
+  }
+  else {
+    insert( a->p[pos], x );
+    if (overflow(a->p[pos])) {
+      int m;
+      BTree* b = split(a->p[pos],&m);
+      addright(a,pos,m,b);
+    }
+  }
+}
+
+
+
+BTree* bt_preemptive_insert (BTree* a, int x) {
+
+  insert(a,x);
+  if(overflow(a)) {
+    int m;
+    BTree* b = split(a,&m);
+    BTree* r = bt_create(a->ordem); r->k[0] = m;
+    r->p[0] = a;
+    r->p[1] = b;
+    r->n = 1;
+    return r;
+  }
+  return a;
+}
 
 
 
