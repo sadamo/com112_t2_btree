@@ -79,7 +79,6 @@ static BTree* split (BTree* a, int* m) {
   a->n = q;
   *m = a->k[q];
   b->p[0] = a->p[q+1];
-
   for (i=0; i < b->n; ++i) {
     b -> k[i] = a->k[q + 1 + i] ;
     b->p[i+1] = a->p[q+1+i+1];
@@ -160,20 +159,23 @@ static void preemptive_insert (BTree* a, int x) {
   int pos;
   findpos(a, x, &pos);
   printf("\nposicao: %d", pos);
-  if (a->n == a->ordem-1) {
+  if (a->n == a->ordem-1) 
+  {
       printf("\ninsert-overflow1");
       int m;
-      BTree* b = split(a->p[pos],&m);
+      BTree* b = split(a ,&m);
       addright(a,pos,m,b);
-      preemptive_insert(a->p[pos], x);
-  }else{
+      preemptive_insert(a, x);
+  }
+  else
+  {
     if (isleaf(a))
     {
       printf("\ninsert-isleaf");
       addright(a,pos,x,NULL);
-    }  
-    preemptive_insert(a->p[pos], x);
-  }       
+    }
+    else preemptive_insert(a->p[pos], x);     
+  } 
 }
 
 
