@@ -165,6 +165,10 @@ static void preemptive_insert (BTree* a, int x) {
       int m;
       BTree* b = split(a ,&m);
       addright(a,pos,m,b);
+      // b->k[0] = m;
+      // b->p[0] = a;
+      // b->p[1] = b;
+      // b->n = 1;
       preemptive_insert(a, x);
   }
   else
@@ -181,14 +185,5 @@ static void preemptive_insert (BTree* a, int x) {
 
 BTree* bt_preemptive_insert (BTree* a, int x) {
   preemptive_insert(a,x);
-  // if(overflow(a)) {
-  //   int m;
-  //   BTree* b = split(a,&m);
-  //   BTree* r = bt_create(a->ordem); r->k[0] = m;
-  //   r->p[0] = a;
-  //   r->p[1] = b;
-  //   r->n = 1;
-  //   return r;
-  // } 
   return a;
 }
