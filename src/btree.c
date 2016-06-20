@@ -92,7 +92,7 @@ static void addright (BTree* a , int pos, int k, BTree* p) {
   int j;
   for (j = a->n; j>pos; --j) {
     a->k[j] = a->k[j-1];
-    a -> p [j + 1] = a->p[j] ;
+    a->p[j+1] = a->p[j] ;
   }
   a->k[pos] = k;
   a->p[pos+1] = p;
@@ -123,7 +123,8 @@ BTree* bt_insert (BTree* a, int x) {
   if(overflow(a)) {
     int m;
     BTree* b = split(a,&m);
-    BTree* r = bt_create(a->ordem); r->k[0] = m;
+    BTree* r = bt_create(a->ordem); 
+    r->k[0] = m;
     r->p[0] = a;
     r->p[1] = b;
     r->n = 1;
@@ -132,44 +133,7 @@ BTree* bt_insert (BTree* a, int x) {
   return a;
 }
 
-static void preemptive_insert (BTree* a, int x) {
-  int pos;
-  findpos(a,x,&pos); /* insere mesmo se ja existir */
-  if (isleaf(a)) {
-    addright(a,pos,x,NULL);
-  }
-  else {
-    insert( a->p[pos], x );
-    if (overflow(a->p[pos])) {
-      int m;
-      BTree* b = split(a->p[pos],&m);
-      addright(a,pos,m,b);
-    }
-  }
-}
-
-
-
-BTree* bt_preemptive_insert (BTree* a, int x) {
-
-  insert(a,x);
-  if(overflow(a)) {
-    int m;
-    BTree* b = split(a,&m);
-    BTree* r = bt_create(a->ordem); r->k[0] = m;
-    r->p[0] = a;
-    r->p[1] = b;
-    r->n = 1;
-    return r;
-  }
-  return a;
-}
-
-
-
-
-
-#define INDENT(x) for (int j=0; j<x; ++j) printf(" ");
+#define INDENT(x) for (int j=0; j<x; ++j) printf("  ");
 void bt_print (BTree* a, int indent)
 {
   int i;
@@ -187,4 +151,42 @@ void bt_print (BTree* a, int indent)
       bt_print(a->p[i],indent+2);
     }
   }
+}
+
+
+//PREEMPTIVE--------------------------------------------------------------------------
+
+static void preemptive_insert (BTree* a, int x) {
+  int pos;
+  findpos(a, x, &pos);
+  printf("\nposicao: %d", pos);
+  if (a->n == a->ordem-1) {
+      printf("\ninsert-overflow1");
+      int m;
+      BTree* b = split(a->p[pos],&m);
+      addright(a,pos,m,b);
+      preemptive_insert(a->p[pos], x);
+  }else{
+    if (isleaf(a))
+    {
+      printf("\ninsert-isleaf");
+      addright(a,pos,x,NULL);
+    }  
+    preemptive_insert(a->p[pos], x);
+  }       
+}
+
+
+BTree* bt_preemptive_insert (BTree* a, int x) {
+  preemptive_insert(a,x);
+  // if(overflow(a)) {
+  //   int m;
+  //   BTree* b = split(a,&m);
+  //   BTree* r = bt_create(a->ordem); r->k[0] = m;
+  //   r->p[0] = a;
+  //   r->p[1] = b;
+  //   r->n = 1;
+  //   return r;
+  // } 
+  return a;
 }

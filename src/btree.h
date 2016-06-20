@@ -10,5 +10,6 @@ int bt_key (BTree* a, int pos);
 BTree* bt_insert (BTree* a, int x);
 BTree* bt_remove (BTree* a, int x);
 void bt_print (BTree* a, int indent);
+BTree* bt_preemptive_insert(BTree* a, int pos);
 
 #endif

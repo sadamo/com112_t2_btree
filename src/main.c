@@ -30,7 +30,12 @@ void opcao_imprimir(BTree* a) {
 }
 
 void opcao_inserir(BTree* a) {
-
+  opcao_imprimir(a);
+  printf("Digite o elemento a ser inserido: ");
+  int elemento;
+  scanf("%d", &elemento);
+  bt_preemptive_insert(a, elemento);
+  opcao_imprimir(a);
 }
 
 void entrar_modo_operacoes(BTree* a) {
